@@ -10,7 +10,10 @@ void setup() {
 }
 
 void loop() {
-  float angle = encoder.angleRead();
-  Serial.println(angle);
-  delay(100);
+
+  // read angular position
+  float curr_angle = encoder.angleRead();
+  Serial.println(curr_angle);
+
+
 }
