@@ -5,9 +5,9 @@
 #include <L293D.h>
 
 // some definitions
-#define MOTOR_A      20   // motor pin a
-#define MOTOR_B      21   // motor pin b
-#define MOTOR_ENABLE 29   // Enable (also PWM pin)
+#define MOTOR_A      20   // motor pin (A0)
+#define MOTOR_B      21   // motor pin (A1)
+#define MOTOR_ENABLE 29   // pwm pin   (B1)
 #define PWM_MOTOR_FREQUENCY   200
 #define PWM_MOTOR_RESOLUTION    8
 
@@ -20,16 +20,22 @@ void setup() {
   Wire.begin();
   encoder.initializeI2C();
   motor.begin(true);
-  motor.SetMotorSpeed(100);
 }
 
 void loop() {
+  static float prev_angle = 0.0; // static kept alive between loops
+
   // read angular position
   float curr_angle = encoder.angleRead();
-  Serial.println(curr_angle);
-  
-  // set motor speed
 
+  // find the current ang vel
+  float omega = prev_angle - curr_angle;
+
+  // set motor speed
+  motor.SetMotorSpeed(100);
+
+  // update prev angle
+  prev_angle = curr_angle;
 
   delay(10);
 }
