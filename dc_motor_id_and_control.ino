@@ -3,39 +3,52 @@
 #include "MT6701.h"
 #include <Arduino.h>
 #include <L293D.h>
+#include <SoftTimers.h>
 
 // some definitions
 #define MOTOR_A      20   // motor pin (A0)
 #define MOTOR_B      21   // motor pin (A1)
 #define MOTOR_ENABLE 29   // pwm pin   (B1)
-#define PWM_MOTOR_FREQUENCY   200
-#define PWM_MOTOR_RESOLUTION    8
+#define DEG_TO_RAD 0.017453292519943295
 
 // instantiate objects
 L293D motor(MOTOR_A, MOTOR_B, MOTOR_ENABLE);
 MT6701 encoder;
+SoftTimer silent_timer;
 
 void setup() {
   Serial.begin(115200);
-  Wire.begin();
   encoder.initializeI2C();
   motor.begin(true);
+  Wire.begin();
+
+  // Timer in "timed out" state
+  silent_timer.setTimeOutTime(1);
+  silent_timer.reset();
+  delay(2);
+  silent_timer.setTimeOutTime(4); // 250Hz
+  silent_timer.reset();
 }
 
 void loop() {
-  static float prev_angle = 0.0; // static kept alive between loops
+  if (silent_timer.hasTimedOut()) {
+    // angular position
+    static float prev_angle = 0.0;
+    float curr_angle = encoder.angleRead();
+    
+    // change in angular position
+    float delta_angle = curr_angle - prev_angle;
+    if (delta_angle > 180.0) delta_angle -= 360.0;
+    if (delta_angle < -180.0) delta_angle += 360.0;
 
-  // read angular position
-  float curr_angle = encoder.angleRead();
+    float omega = delta_angle * 4.36332313; // rad/
 
-  // find the current ang vel
-  float omega = prev_angle - curr_angle;
+    Serial.print("omega: ");
+    Serial.println(omega);
 
-  // set motor speed
-  motor.SetMotorSpeed(100);
+    motor.SetMotorSpeed(3.0); // voltage input
 
-  // update prev angle
-  prev_angle = curr_angle;
-
-  delay(10);
+    prev_angle = curr_angle;
+    silent_timer.reset();
+  }
 }
