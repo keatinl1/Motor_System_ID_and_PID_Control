@@ -30,7 +30,14 @@ There are two advantages:
 
 After I collected the data, there were some clearly incorrect data points; these were removed by simply dropping the rows, and the input-output data was as shown in Figure 2.
 
-***figure 2: input output prbs***
+<p align="center">
+  <kbd>
+    <img src="https://raw.githubusercontent.com/keatinl1/dc_motor_id_and_control/refs/heads/main/figs/prbs_input_output.png">
+  </kbd>
+</p>
+<p align="center">
+Figure 2: input output prbs.
+</p>
 
 An Autoregressive Moving Average with Exogenous Inputs (ARMAX) model was used in the MATLAB System Identification toolbox to make a discrete of the system and it achieved 74% accuracy.
 
@@ -58,11 +65,25 @@ $$
 
 The following step response is produced in Figure 3.
 
-***figure 3: step response ***
+<p align="center">
+  <kbd>
+    <img src="https://raw.githubusercontent.com/keatinl1/dc_motor_id_and_control/refs/heads/main/figs/step_response.png">
+  </kbd>
+</p>
+<p align="center">
+Figure 3: Step Response.
+</p>
 
 This controller is then applied to the system and the following result is achieved in Figure 4.
 
-***figure 4: results ***
+<p align="center">
+  <kbd>
+    <img src="https://raw.githubusercontent.com/keatinl1/dc_motor_id_and_control/refs/heads/main/figs/results1.png">
+  </kbd>
+</p>
+<p align="center">
+Figure 4: Results.
+</p>
 
 # Stability Analysis
 
