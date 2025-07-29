@@ -60,5 +60,9 @@ The following step response is produced in Figure 3.
 
 ***figure 3: step response ***
 
+This controller is then applied to the system and the following result is achieved in Figure 4.
+
+***figure 4: results ***
+
 # Stability Analysis
 
