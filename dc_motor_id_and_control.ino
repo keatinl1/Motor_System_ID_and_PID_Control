@@ -10,7 +10,7 @@
 #define MOTOR_B      21   // motor pin (A1)
 #define MOTOR_ENABLE 29   // pwm pin   (B1)
 #define DT           0.004
-#define WC           100  // rad/s
+#define WC           50  // rad/s
 
 // instantiate objects
 L293D motor(MOTOR_A, MOTOR_B, MOTOR_ENABLE);
@@ -48,13 +48,24 @@ void loop() {
     static float prev_angle = 0.0;
     float curr_angle = encoder.angleRead();
 
+    // estimate angular velocity with a filter
     static float prev_raw_omega = 0.0; // xk-1
     float raw_omega = angle_to_ang_vel(prev_angle, curr_angle); // xk
     static float prev_omega = 0.0; // yk-1
-
-    // filter angular velocity
     float omega = lpf(raw_omega, prev_raw_omega, prev_omega);
 
+    // control
+    float error = 25000/2 - omega;
+    float input = 0.001 * error;
+    if (input > 5.0){
+      input = 5.0;
+    }
+    if (input < -5.0){
+      input = -5.0;
+    }
+    motor.SetMotorSpeed(input); // voltage input
+
+    // print for serial monitor
     Serial.print("omega:");
     Serial.println(omega);
     Serial.print("ref:");
@@ -62,18 +73,7 @@ void loop() {
     Serial.print("x0:");
     Serial.println(0.0);
 
-    float error = 25000 - omega;
-    float input = 0.001 * error;
-
-    if (input > 5.0){
-      input = 5.0;
-    }
-    if (input < -5.0){
-      input = -5.0;
-    }
-
-    motor.SetMotorSpeed(input); // voltage input
-
+    // update vars
     prev_angle = curr_angle;
     prev_raw_omega = raw_omega;
     prev_omega = omega;
