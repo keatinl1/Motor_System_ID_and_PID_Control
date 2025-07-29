@@ -11,6 +11,9 @@
 #define MOTOR_ENABLE 29   // pwm pin   (B1)
 #define DT           0.004
 #define WC           50  // rad/s
+#define KP  0.0038
+#define KI  0.0254
+#define KD  6.58*pow(10, -5)
 
 // instantiate objects
 L293D motor(MOTOR_A, MOTOR_B, MOTOR_ENABLE);
@@ -42,8 +45,41 @@ float lpf(float omega_x_k, float omega_x_k_1, float omega_y_k_1) {
   return alpha*omega_y_k_1 + gamma*(omega_x_k + omega_x_k_1);
 }
 
+float pid(float error, float sum, float rate) {
+  float input = KP*error + KI*sum + KD*rate;
+
+  if (input > 5.0){
+    input = 5.0;
+  }
+  if (input < -5.0){
+    input = -5.0;
+  }
+
+  return input;
+}
+
 void loop() {
   if (silent_timer.hasTimedOut()) {
+
+    static int step_counter = 0;
+    static float ref = 0;
+
+    if (step_counter < 500) {
+      ref = 0;
+    } else if (step_counter < 1000) {
+      ref = 12500;
+    } else if (step_counter < 1500) {
+      ref = 25000;
+    } else if (step_counter < 2000) {
+      ref = 12500;
+    } else if (step_counter < 2500) {
+      ref = 0;
+    } else {
+      step_counter = 0;
+    }
+    step_counter++;
+
+
     // get angular velocity
     static float prev_angle = 0.0;
     float curr_angle = encoder.angleRead();
@@ -55,21 +91,21 @@ void loop() {
     float omega = lpf(raw_omega, prev_raw_omega, prev_omega);
 
     // control
-    float error = 25000/2 - omega;
-    float input = 0.001 * error;
-    if (input > 5.0){
-      input = 5.0;
-    }
-    if (input < -5.0){
-      input = -5.0;
-    }
+    static float prev_error = 0;
+    static float sum = 0;
+    
+    float error = ref - omega;
+    sum += error*DT;
+    float rate = (error-prev_error)/DT;
+    float input = pid(error, sum, rate);
+
     motor.SetMotorSpeed(input); // voltage input
 
     // print for serial monitor
     Serial.print("omega:");
     Serial.println(omega);
     Serial.print("ref:");
-    Serial.println(25000.0);
+    Serial.println(ref);
     Serial.print("x0:");
     Serial.println(0.0);
 
@@ -77,6 +113,7 @@ void loop() {
     prev_angle = curr_angle;
     prev_raw_omega = raw_omega;
     prev_omega = omega;
+    prev_error = error;
     silent_timer.reset();
   }
 }
