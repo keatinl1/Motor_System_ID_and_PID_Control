@@ -38,14 +38,25 @@ void loop() {
     }
     float delta_angle = curr_angle - prev_angle;
     
-    // change in angle to rad divide by change in const timestep
-    float omega = delta_angle * 4.36332313;
+    // change angle to deg/s by divide in const timestep
+    float omega = delta_angle / 0.004;;
 
-    Serial.print("omega: ");
-    Serial.print(omega);
-    Serial.println("rad/s");    
+    Serial.print("omega:");
+    Serial.println(omega);
+    Serial.print("ref:");
+    Serial.println(25000.0);
 
-    motor.SetMotorSpeed(3.0); // voltage input
+    float error = 25000 - omega;
+    float input = 0.001 * error;
+
+    if (input > 5.0){
+      input = 5.0;
+    }
+    if (input < -5.0){
+      input = -5.0;
+    } 
+
+    motor.SetMotorSpeed(input); // voltage input
 
     prev_angle = curr_angle;
     silent_timer.reset();
