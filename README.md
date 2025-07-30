@@ -25,7 +25,7 @@ The parts which I used in this project are listed below; they are connected as s
   </kbd>
 </p>
 <p align="center">
-Figure 1: Circuit Diagram
+Figure 1: Circuit Diagram.
 </p>
 
 $~~~~~~~~~~$
@@ -43,12 +43,12 @@ After I collected the data, there were some clearly incorrect data points (outli
   </kbd>
 </p>
 <p align="center">
-Figure 2: PRBS input-output
+Figure 2: PRBS input-output.
 </p>
 
 An Autoregressive Moving Average with Exogenous Inputs (ARMAX) model was used in the MATLAB System Identification toolbox to make a discrete model of the system. A predictive accuracy of 74% was achieved.
 
-The identified transfer function below has two poles and two zeros, which might seem like overkill for such a simple system, but simpler models had a steep drop in accuracy (down to 53%).
+The model was then transformed into the transfer function below. It has two poles and two zeros, which might seem like overkill for such a simple system, but simpler models had a steep drop in accuracy (down to 53%).
 
 $$
   G(z^{-1}) = \frac{94.83 z^{-1} + 193.3 z^{-2}}{1 - 0.5899 z^{-1} - 0.03679 z^{-2}}
@@ -91,15 +91,31 @@ Figure 3: Model Step Response.
 $~~~~~~~~~~$
 
 ## Stability Analysis
+For stability analysis, I will examine the classic gain and phase margins, which assume exclusive variations. Then I will also look at disk margin, which examines the combined gain & phase robustness.
+
+The gain margin (GM) and phase margin (PM) were found using the MATLAB margin() function; the resulting Bode plot is shown in Figure 4. A gain margin of 16.3dB and a phase margin of 64.6 degrees is a very stable system. Usually, we aim for our GM to be greater than 2 and PM to be greater than 30, but since our system is already robust, there is no need to change the control design.
+
+Another way to confirm is modulus margin; this is the maximum gain of the sensitivity function (S = 1/(1+L)). We typically look for a gain of less than 2 (6dB) at the peak to imply good gain and phase margins. At the peak of our Bode magnitude plot, the maximum gain is 1.4 (2.93dB), so this further confirms our stability findings.
+
+<p align="center">
+  <kbd>
+    <img src="https://raw.githubusercontent.com/keatinl1/dc_motor_id_and_control/refs/heads/main/figs/margins.png">
+  </kbd>
+</p>
+<p align="center">
+Figure 4: Gain and Phase Margins.
+</p>
+
+Next, we can examine the disk margin. 
 
 
 ## Results
-The controller is applied to the system, and the result in Figure 4 is achieved.
+Finally, when the controller is applied to the system, the result in Figure 6 is achieved.
 <p align="center">
   <kbd>
     <img src="https://raw.githubusercontent.com/keatinl1/dc_motor_id_and_control/refs/heads/main/figs/results1.png">
   </kbd>
 </p>
 <p align="center">
-Figure 4: Velocity Control Achieved.
+Figure 6: Velocity Control Achieved.
 </p>
