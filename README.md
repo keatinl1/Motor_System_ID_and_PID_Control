@@ -94,5 +94,5 @@ The controller is applied to the system, and the result in Figure 4 is achieved.
   </kbd>
 </p>
 <p align="center">
-Figure 4: Results.
+Figure 4: Velocity Control Achieved.
 </p>
