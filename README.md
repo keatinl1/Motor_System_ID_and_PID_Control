@@ -1,6 +1,12 @@
 ## Brief Summary
 The goal of this project was to develop a model-based controller for a DC motor whose specs I did not have. 
 
+0. [Hardware](#hardware)
+1. [System Identification](#system-identification)
+2. [Controller Design](#controller-design)
+3. [Stability Analysis](#stability-analysis)
+4. [Results](#results)
+
 $~~~~~~~~~~$
 
 ## Hardware
