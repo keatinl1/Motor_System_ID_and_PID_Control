@@ -93,9 +93,9 @@ $~~~~~~~~~~$
 ## Stability Analysis
 For stability analysis, I will examine the classic gain and phase margins, which assume exclusive variations. Then I will also look at disk margin, which examines the combined gain & phase robustness.
 
-The gain margin (GM) and phase margin (PM) were found using the MATLAB margin() function; the resulting Bode plot is shown in Figure 4. A gain margin of 16.3dB and a phase margin of 64.6 degrees is a very stable system. Usually, we aim for our GM to be greater than 2 and PM to be greater than 30, but since our system is already robust, there is no need to change the control design.
+The gain margin (GM) and phase margin (PM) were found using the MATLAB margin(L) function; the resulting Bode plot is shown in Figure 4. A gain margin of 16.3dB and a phase margin of 64.6 degrees is a very stable system. Usually, we aim for our GM to be greater than 2 and PM to be greater than 30. Since our system is already robust, there is no need to change the controller design.
 
-Another way to confirm is modulus margin; this is the maximum gain of the sensitivity function (S = 1/(1+L)). We typically look for a gain of less than 2 (6dB) at the peak to imply good gain and phase margins. At the peak of our Bode magnitude plot, the maximum gain is 1.4 (2.93dB), so this further confirms our stability findings.
+Another way to confirm is modulus margin; this is the maximum gain of the sensitivity function (S = 1/(1+L)). We typically look for a gain of less than 2 (6dB) at the peak to imply good gain and phase margins. At the peak of our Bode magnitude plot, the maximum gain is 1.4 (2.93dB), which further confirms the stability findings.
 
 <p align="center">
   <kbd>
@@ -108,6 +108,7 @@ Figure 4: Gain and Phase Margins.
 
 Next, we can examine the disk margin. 
 
+$~~~~~~~~~~$
 
 ## Results
 Finally, when the controller is applied to the system, the result in Figure 6 is achieved.
