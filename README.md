@@ -91,7 +91,7 @@ Figure 3: Model Step Response.
 $~~~~~~~~~~$
 
 ## Stability Analysis
-For stability analysis, I will examine the classic gain and phase margins, which assume exclusive variations. Then I will also look at disk margin, which examines the combined gain & phase robustness.
+For stability analysis, I will examine the classic gain and phase margins, which assume exclusive variations. Then I will also look at disc margin, which examines the combined gain & phase robustness.
 
 The gain margin (GM) and phase margin (PM) were found using the MATLAB margin(L) function (where L is the controller C and the identified model G in series); the resulting Bode plot is shown in Figure 4. A gain margin of 16.3dB and a phase margin of 64.6 degrees is a very stable system. Usually, we aim for our GM to be greater than 2 and PM to be greater than 30. Since our system is already robust, there is no need to change the controller design.
 
@@ -106,7 +106,30 @@ Another way to confirm is modulus margin; this is the maximum gain of the sensit
 Figure 4: Gain and Phase Margins.
 </p>
 
-Next, we can examine the disk margin. 
+Next, we can examine the disc margin. Using the diskmargin(L) function in MATLAB, the following margins can be found in Table 2.
+<p style="text-align: center;"><strong>Table 2: disc Margin Values</strong></p>
+
+<div style="display: flex; justify-content: center;">
+  <table>
+    <tr><th>Metric</th><th>Value</th></tr>
+    <tr><td>Gain Margin</td><td>[0.3255, 3.0722]</td></tr>
+    <tr><td>Phase Margin</td><td>[-53.94°, 53.94°]</td></tr>
+    <tr><td>disc Margin</td><td>1.0177</td></tr>
+  </table>
+</div>
+
+These can also be visualised as shown in Figure 4. Where the unit circle is in black and the disc is in blue. Where the disc intersects the real axis is the disc margin values 0.3255 and 3.0722. Where the disc intersects the unit circle is the phase margin. 
+
+<p align="center">
+  <kbd>
+    <img src="https://raw.githubusercontent.com/keatinl1/dc_motor_id_and_control/refs/heads/main/figs/disk_margin_new.png">
+  </kbd>
+</p>
+<p align="center">
+Figure 4: Disc Margins.
+</p>
+
+How we interpret these values is that any combination of gain and phase inside that disc guarantees closed-loop stability.
 
 $~~~~~~~~~~$
 
