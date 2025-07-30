@@ -54,6 +54,7 @@ $~~~~~~~~~~$
 The control requirements were a fast settling time, $\approx0.2s$, and as long as the PID controller was reasonably robust, that was acceptable.
 
 Using the settling time equation below and setting the crossover frequency ($\omega_c$) to 20rad/s
+
 $$
   T_s = \frac{4}{\omega_c}
 $$
