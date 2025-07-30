@@ -118,7 +118,7 @@ Next, we can examine the disc margin. Using the diskmargin(L) function in MATLAB
   </table>
 </div>
 
-These can also be visualised as shown in Figure 4. Where the unit circle is in black and the disc is in blue. Where the disc intersects the real axis is the disc margin values 0.3255 and 3.0722. Where the disc intersects the unit circle is the phase margin. 
+These can also be visualised as shown in Figure 4. Where the unit circle is in black and the disc is in blue. Where the disc intersects the real axis is the disc margin values 0.3255 and 3.0722. Where the disc intersects the unit circle at -53.94° and 53.94° is the phase margin.
 
 <p align="center">
   <kbd>
