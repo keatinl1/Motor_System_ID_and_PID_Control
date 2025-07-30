@@ -64,7 +64,6 @@ The MATLAB pidtune() app was used to design the controller, and the gains in the
   </table>
 </div>
 
-
 When the PID controller is applied to the model, the step response in Figure 3 is produced.
 <p align="center">
   <kbd>
@@ -75,7 +74,13 @@ When the PID controller is applied to the model, the step response in Figure 3 i
 Figure 3: Model Step Response.
 </p>
 
-This controller is then applied to the system, and the following result is achieved in Figure 4.
+$~~~~~~~~~~$
+
+## Stability Analysis
+
+
+## Results
+The controller is applied to the system, and the result in Figure 4 is achieved.
 <p align="center">
   <kbd>
     <img src="https://raw.githubusercontent.com/keatinl1/dc_motor_id_and_control/refs/heads/main/figs/results1.png">
@@ -84,8 +89,3 @@ This controller is then applied to the system, and the following result is achie
 <p align="center">
 Figure 4: Results.
 </p>
-
-$~~~~~~~~~~$
-
-## Stability Analysis
-
