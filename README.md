@@ -19,7 +19,14 @@ The parts which I used in this project are listed below; they are connected as s
 - HW-131 Breadboard Power Supply
 - 9V Battery
 
-***figure 1: circuit***
+<p align="center">
+  <kbd>
+    <img src="https://raw.githubusercontent.com/keatinl1/Motor_System_ID_and_PID_Control/refs/heads/main/figs/circuit.png">
+  </kbd>
+</p>
+<p align="center">
+Figure 1: Circuit Diagram
+</p>
 
 $~~~~~~~~~~$
 
